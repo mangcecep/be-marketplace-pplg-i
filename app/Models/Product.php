@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
 {
@@ -15,4 +17,10 @@ class Product extends Model
         'img_url',
         'img_name',
     ];
+
+    function category() 
+    {
+        return self::belongsTo(ProductType::class, 'product_type_id', 'id');
+        
+    }
 }

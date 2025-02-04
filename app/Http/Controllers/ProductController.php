@@ -12,7 +12,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $data = Product::with("category")->get();
+        return response(["message" => "Product is founded",  "data" => $data], 200);
     }
 
     /**
@@ -29,7 +30,7 @@ class ProductController extends Controller
             'img_url' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        $imageName = time().'.'.$request->img_url->extension();
+        $imageName = time() . '.' . $request->img_url->extension();
 
         $request->img_url->move(public_path('images'), $imageName);
 
@@ -39,7 +40,7 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock,
-            'img_url' => url('/images/'.$imageName),
+            'img_url' => url('/images/' . $imageName),
             'img_name' => $imageName,
         ]);
 
